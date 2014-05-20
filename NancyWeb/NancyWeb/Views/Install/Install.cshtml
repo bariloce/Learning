@@ -1,0 +1,45 @@
+﻿@using System
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<NancyWeb.Models.Install.InstallModel>
+@{
+    Layout = "_CustomLayout.cshtml";
+    ViewBag.Title = "Installation page";
+}
+
+<form action="/install" method="post">
+    @if (!String.IsNullOrEmpty(Model.TestConnectionMessage))
+    {
+        var style = Model.ConnectionSuccessfull ? "alert-success" : "alert-danger";
+        <div class="alert @style alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            @Model.TestConnectionMessage
+        </div>
+    }
+    
+    <div class="form-group">
+        <label for="SqlServerName">SQL Server name</label>
+        <input type="text" class="form-control" id="SqlServerName" name="SqlServerName" value="@Model.SqlServerName" />
+    </div>
+    <div class="form-group">
+        <label for="SqlDatabaseName">Database name</label>
+        <input type="text" class="form-control" id="SqlDatabaseName" name="SqlDatabaseName" value="@Model.SqlDatabaseName"/>
+    </div>
+    <div class="form-group">
+        <label for="TrustedConnection">Trusted connection</label>
+        <input type="checkbox" id="TrustedConnection" name="TrustedConnection" checked="@Model.TrustedConnection"/>
+    </div>
+    <div class="form-group">
+        <label for="SqlServerUsername">Username</label>
+        <input type="text" class="form-control" id="SqlServerUsername" name="SqlServerUsername" value="@Model.SqlServerUsername" />
+    </div>
+    <div class="form-group">
+        <label for="SqlServerPassword">Password</label>
+        <input type="password" class="form-control" id="SqlServerPassword" name="SqlServerPassword" value="@Model.SqlServerPassword" />
+    </div>
+    <div class="form-group">
+        <label for="disabledInput">ConnectionString</label>
+        <input class="form-control" id="disabledInput" type="text" value="@Model.ConnectionString" disabled>
+    </div>
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary" value="Test connection"/>
+    </div>
+</form>
